@@ -4,8 +4,10 @@ const path = require('path')
 const fs = require('fs')
 app.use(express.static(path.join(__dirname, 'public')))
 
+let times =0 ;
 
 app.get('/', function (req, res) {
+    times++;
     fs.readFile(path.join(__dirname, 'public', 'html', 'index.html'), (err, data) => {
         if (err) {
             throw err
@@ -13,7 +15,7 @@ app.get('/', function (req, res) {
         else {
             res.setHeader('Content-Type', 'text/html')
             res.send(data);
-            console.log('返回html')
+            console.log('访问了'+times+'次')
         }
     })
 })
