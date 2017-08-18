@@ -1,4 +1,4 @@
-const express = require('express')
+﻿const express = require('express')
 const app = express();
 const path = require('path')
 const fs = require('fs')
@@ -20,6 +20,6 @@ app.get('/', function (req, res) {
     })
 })
 
-app.listen(81, function(){
+app.listen(520, function(){
     console.log('running...')
 })
