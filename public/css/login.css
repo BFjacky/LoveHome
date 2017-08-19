@@ -1,0 +1,43 @@
+body,html{
+    height: 100vh;
+    width:100%;
+    margin:0;
+    padding:0;
+    background-image:url(../img/纸张5.jpg);
+}
+div{
+
+}
+#login{
+    width:100%;
+    height:50%;
+}
+#denglu{
+    height:100%;
+    width:100%;
+    font-size:200%;
+    text-align: center;
+}
+.text{
+    background-image:url(/img/纸张4.jpg);
+    font-size:100%;
+    padding:0;
+    color:black;
+    border-radius:5%;;
+    margin-top:8%;
+    height:20%;
+    width:100%;
+}
+#input1{
+    margin-top:30%;
+}
+.submit_button{
+    text-align: center;
+    font-size:100%;
+    border-radius: 10%;
+    color: black;
+    background-image:url(/img/纸张4.jpg);
+    width:30%;
+    height:20%;
+    margin-top:8%;
+}
