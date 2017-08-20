@@ -3,6 +3,7 @@ body,html{
     padding:0;
     height: 100%;
     width:100%;
+    background-color: #EDCD7A;
 }
 div{
     margin:0;
@@ -12,6 +13,8 @@ div{
     height: 25%;
     width:100%;
     background-color: green;
+    background-image: url(/img/眼镜.jpg);
+    background-size: 100% 100%;
 }
 #main{
     height: 65%;
@@ -19,22 +22,28 @@ div{
 
 }
 .function{
-    background-image:url(/img/纸张5.jpg);
+    background-image:url(/img/纸张4.jpg);
+    background-size: 100% 100%;  
     display: inline-block;
     height: 28%;
-    width:49.5%;
+    width:48%;
+    border:3px #D9E3DE solid;
+    border-radius: 20px;
+}
+.function:active{
+   
 }
 #function1,#function2{
-    margin-top:4px;
 }
 #function2,#function4,#function6{
-    margin-left:1%;
 }
-a{
-    display: inline-block;
-    width:100%;
-    height:100%;
-    font-size:200%;
+.fontDiv{
+    color:#9C6D1C;
+    font-family: "Microsoft Yahei",Verdana;
+    padding-top:25px;
+    display: block;
+    margin:auto auto;
+    font-size:300%;
     text-align: center;
-    
+    text-decoration: none;
 }

@@ -105,16 +105,19 @@ app.get('/returnMates', async function (req, res) {
             case '找老乡': {
                 let result = await myMates.findSameHome(name)
                 res.send(result)
+                console.log('找到了老乡')
                 break;
             }
             case '找同生日': {
                 let result = await myMates.findSameBirthday(name)
                 res.send(result)
+                console.log('找到了生日')
                 break;
             }
             case '找同班': {
                 let result = await myMates.findSameClass(name)
                 res.send(result)
+                console.log('找到了同班')
                 break;
             }
         }

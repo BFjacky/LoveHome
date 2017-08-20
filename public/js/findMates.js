@@ -111,7 +111,7 @@ $(document).ready(function () {
 function sendGet(data) {
     console.log('发送请求')
     $.get('/returnMates', data, function (result) {
-        console.log(result.length)
+        console.log('----'+result.length)
         renderResult(result)
     })
 }
