@@ -3,15 +3,27 @@ const password = 'dyycyf1314';
 //处理cookie
 module.exports = async function (req, res, next) {
     //没有cookie,则false
-    console.log('1-----')
     if (JSON.stringify(req.cookies) == '{}') {
         req.flag = false;
         return next();
     }
-    console.log('2-------')
-    //有cookie，看是否可用
-    req.flag = await isTrue(req.cookies.sessionId);
-    return next();
+    //有cookie并且为真
+    else{
+       req.flag = await isTrue(req.cookies.sessionId);
+       if(req.flag){
+           return next();
+       }
+    }
+    //有cookie，看密码是否正确，密码正确则绑定成功，激活cookie
+    if (req.body.password === password) {
+        await makeTrue(req.cookies.sessionId)
+        req.flag = true;
+        return next();
+    }
+    else {
+        req.flag = false;
+        return next();
+    }
 }
 function NewSessionId(sessionId) {
     console.log('正在向数据库中插入新sessionId: ', sessionId);
@@ -73,6 +85,7 @@ function makeTrue(sessionId) {
 }
 
 function isTrue(sessionId) {
+    console.log('正在判断是否sessionId是否可用')
     let p = new Promise(function (resolve, reject) {
         let whereStr = { sessionId: sessionId }
         sessions.find(whereStr, function (err, res) {
@@ -82,11 +95,13 @@ function isTrue(sessionId) {
             }
             else {
                 let flag;
-                flag = res[0].isAvilible;
+                res.forEach(function (e) {
+                    flag = e.isAvilible;
+                })
                 if (flag !== true) {
                     flag = false;
                 }
-                console.log('经istrue方法验证flag为: ', flag);
+                console.log(flag);
                 resolve(flag);
             }
         })

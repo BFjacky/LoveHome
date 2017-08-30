@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const Mates = require('./persistence/Mates.js')
 const myMates = new Mates();
+const authlogin = require('./midwares/authlogin.js')
+const authmain = require('./midwares/authmain.js')
 const auth = require('./midwares/auth.js')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser())
@@ -14,9 +16,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }))
-
 let times = 0;
-app.get('/', function (req, res) {
+app.get('/', authlogin, function (req, res) {
+    console.log(req.flag);
+    if (req.flag) {
+        //重定向main页面
+        res.writeHead(302, {
+            'Location': '/main'
+        });
+        res.end();
+        return;
+    }
     fs.readFile(path.join(__dirname, 'public', 'html', 'login.html'), (err, data) => {
         if (err) {
             throw err
@@ -29,12 +39,9 @@ app.get('/', function (req, res) {
     })
 })
 
-app.post('/main', function (req, res) {
-    //先进行假验证
-    if (req.body.password === 'dyycyf1314') {
-        app.locals.flag = true
-    }
-    if (app.locals.flag) {
+app.use('/main',authmain, function (req, res) {
+    console.log('访问了main页面')
+    if (req.flag) {
         fs.readFile(path.join(__dirname, 'public', 'html', 'main.html'), (err, data) => {
             if (err) {
                 throw err
@@ -53,8 +60,8 @@ app.post('/main', function (req, res) {
     }
 })
 
-app.get('/index', function (req, res) {
-    if (app.locals.flag) {
+app.get('/index', auth,function (req, res) {
+    if (req.flag) {
         fs.readFile(path.join(__dirname, 'public', 'html', 'index.html'), (err, data) => {
             if (err) {
                 throw err
@@ -74,8 +81,8 @@ app.get('/index', function (req, res) {
     }
 })
 
-app.get('/findMates', function (req, res) {
-    if (app.locals.flag) {
+app.get('/findMates', auth,function (req, res) {
+    if (req.flag) {
         fs.readFile(path.join(__dirname, 'public', 'html', 'findMates.html'), (err, data) => {
             if (err) {
                 throw err
@@ -94,12 +101,12 @@ app.get('/findMates', function (req, res) {
     }
 })
 
-app.get('/returnMates', async function (req, res) {
-    if (app.locals.flag) {
+app.get('/returnMates',auth, async function (req, res) {
+    if (req.flag) {
         console.log(req.query);
         let name = req.query['name'];
         let text = req.query['text'];
-        console.log(name,text)
+        console.log(name, text)
         console.log('收到了请求')
         switch (text) {
             case '找老乡': {
@@ -125,5 +132,5 @@ app.get('/returnMates', async function (req, res) {
 })
 
 app.listen(520, function () {
-    console.log('running...')
+    console.log('listening 520...')
 })
