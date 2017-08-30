@@ -1,5 +1,6 @@
 $(document).ready(function () {
-
+    $('body').height($('body')[0].clientHeight);
+    $('html').height($('html')[0].clientHeight);
     let isopen = false;
     $('#choise0').click(function () {
         $('#choise1').css('display', 'block')
